@@ -1,14 +1,15 @@
 const express = require('express');
 const path = require('path');
 const exphbs = require('express-handlebars');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const passport = require('passport');
 
-//Load User Model
+//Load Models
 require('./models/User');
-
+require('./models/Story');
 
 //Passport Config
 require('./config/passport')(passport);
@@ -47,6 +48,10 @@ app.use(session({
 //Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
+
+//body-parser Middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 //Global Variables
 app.use((req, res, next) => {
