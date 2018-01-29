@@ -15,3 +15,11 @@ main {
 footer {
   margin-top: 20px;
 }
+
+.dash-status {
+  text-transform: capitalize;
+}
+
+#delete-form {
+  display: inline;
+}
