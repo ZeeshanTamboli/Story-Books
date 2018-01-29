@@ -22,6 +22,12 @@ const auth = require('./routes/auth');
 //Load Keys
 const keys = require('./config/keys');
 
+//Handlebars Helpers
+const {
+  truncate,
+  stripTags
+} = require('./helpers/hbs');
+
 //Map global promises
 mongoose.Promise = global.Promise;
 //Mongoose connect
@@ -32,7 +38,13 @@ mongoose.connect(keys.mongoURI)
 const app = express();
 
 //express-handlebars middleware
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', exphbs({
+  helpers: {
+    truncate: truncate,
+    stripTags: stripTags
+  },
+  defaultLayout: 'main'
+}));
 app.set('view engine', 'handlebars');
 
 //Cookie-parser middleware
