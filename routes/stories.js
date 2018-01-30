@@ -46,6 +46,33 @@ router.get('/edit/:id', ensureAuthenticated,  (req, res) => {
   });
 });
 
+//Edit Process Form(PUT)
+router.put('/:id', (req, res) => {
+  Story.findOne({
+    _id: req.params.id
+  })
+  .then(story => {
+    let allowComments;
+
+  if(req.body.allowComments) {
+    allowComments = true;
+  } else {
+    allowComments = false;
+  }
+
+  //New Values
+  story.title = req.body.title;
+  story.body = req.body.body;
+  story.allowComments = allowComments;
+  story.status = req.body.status;
+
+  story.save()
+    .then(story => {
+      res.redirect('/dashboard');
+    });
+  });
+});
+
 //Process Add Story
 router.post('/', (req, res) => {
   let allowComments;
